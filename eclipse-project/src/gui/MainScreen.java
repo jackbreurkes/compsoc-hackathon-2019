@@ -77,6 +77,7 @@ public class MainScreen extends TimerTask {
 	
 	
 	private DecimalFormat df = new DecimalFormat("#.##");
+	private JPanel choicesPanel;
 
 
 	public MainScreen(Game manager) {
@@ -120,7 +121,7 @@ public class MainScreen extends TimerTask {
 	
 	private void createGrid() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] {250, 550, 0};
+		gridBagLayout.columnWidths = new int[] {279, 550, 0};
 		gridBagLayout.rowHeights = new int[]{572, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0};
 		gridBagLayout.rowWeights = new double[]{0.0, Double.MIN_VALUE};
@@ -213,6 +214,13 @@ public class MainScreen extends TimerTask {
 		button.setBounds(25, y, 200, 50);
 		panel.add(button);
 		
+	}
+	
+	
+	public void createChoicesPanel() {
+		choicesPanel = new JPanel();
+		choicesPanel.setLayout(null);
+		tabbedPane.addTab("Choices", null, choicesPanel, null);
 	}
 	
 	public void createActionsPanel(JPanel panel) {
