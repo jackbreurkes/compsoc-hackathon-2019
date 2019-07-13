@@ -1,3 +1,5 @@
+package logic;
+
 
 public class Upgrade extends Ongoing {
 
@@ -15,6 +17,7 @@ public class Upgrade extends Ongoing {
 	
 	@Override
 	public void ApplyEffects() {
-		
+		super.ApplyEffects();
+		super.getGameManager().changeMoney(-cost);
 	}
 }
