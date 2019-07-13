@@ -1,4 +1,4 @@
-
+package logic;
 public class Upgrade extends Ongoing {
 
 	private int cost;

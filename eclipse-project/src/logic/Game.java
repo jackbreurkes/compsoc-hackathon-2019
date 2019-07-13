@@ -5,11 +5,11 @@ import gui.MainScreen;
 
 public class Game {
 	
-	int actionPoints;
-	int carbonFootPrint;
-	int money;
-	int dailyExpenses;
-	int income;
+	private int actionPoints;
+	private int carbonFootPrint;
+	private int money;
+	private int dailyExpenses;
+	private int income;
 	//ArrayList<Ongoing> onGoingActions = new ArrayList<OnGoing>();
 	//ArrayList<Buyable> inventory = new ArrayList<Buyable>();
 	
@@ -17,6 +17,7 @@ public class Game {
 	public static void main(String[] args) {
 		Game game = new Game();
 		game.launchMainScreen();
+		System.out.println("Working");
 	}
 	
 	/* create GUI */
