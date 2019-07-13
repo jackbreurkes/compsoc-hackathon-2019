@@ -2,16 +2,39 @@ package logic;
 
 public class Booster {
 
+	private String name = "Booster";
 	private int cost;
 	private int actionPointCost;
 	private int CO2Change;
 	private int APChange;
+	private String fact;
 	
 	public Booster(int cost, int actionPointCost, int CO2Change, int APChange) {
 		this.cost = cost;
 		this.actionPointCost = actionPointCost;
 		this.CO2Change = CO2Change;
 		this.APChange = APChange;
+	}
+	
+	public Booster(int cost, int actionPointCost, int CO2Change, int APChange, String fact) {
+		this(cost, actionPointCost, CO2Change, APChange);
+		this.fact = fact;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public String getFact() {
+		return fact;
+	}
+	
+	public int getCost() {
+		return cost;
+	}
+	
+	public int getAPCost() {
+		return actionPointCost;
 	}
 	
 	public void applyEffects(Game game) {

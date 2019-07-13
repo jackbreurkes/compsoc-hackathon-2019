@@ -43,6 +43,7 @@ public class Ongoing {
 		gameManager.changeDailyCO2(dailyCO2);
 		gameManager.changeDailyActionPoints(dailyActionPoints);
 		gameManager.addOngoingAction(this);
+		gameManager.getUpgradeCounts().put(name, gameManager.getUpgradeCounts().get(name) + 1);
 		return true;
 	}
 	

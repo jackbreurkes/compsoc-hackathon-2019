@@ -14,6 +14,10 @@ public class Upgrade extends Ongoing {
 		this.cost = cost;
 	}
 	
+	public int getCost() {
+		return cost;
+	}
+	
 	@Override
 	public boolean ApplyEffects(Game gameManager) {
 		if (gameManager.getMoney() < cost) {
