@@ -4,6 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -16,10 +17,10 @@ public class Game extends TimerTask {
 	public final int DAILY_EARNINGS = 130;
 
 	int totalAP;
-	int totalCO2;
+	float totalCO2;
 	int totalMoney;
 	int dailyExpenses;
-	int dailyCO2;
+	float dailyCO2;
 	int dailyAP;
 	ArrayList<Ongoing> onGoingActions = new ArrayList<Ongoing>();
 	List<Choice> choices = new ArrayList<Choice>();
@@ -46,7 +47,7 @@ public class Game extends TimerTask {
 		this.totalAP = actionPoints;
 	}
 	
-	public void setCarbonFootPrint(int carbonFootPrint) {
+	public void setCarbonFootPrint(float carbonFootPrint) {
 		this.totalCO2 = carbonFootPrint;
 	}
 	
@@ -58,7 +59,7 @@ public class Game extends TimerTask {
 		this.totalMoney = money;
 	}
 	
-	public void changeDailyCO2(int change) {
+	public void changeDailyCO2(float change) {
 		this.dailyCO2 += change;
 	}
 	
@@ -66,7 +67,7 @@ public class Game extends TimerTask {
 		this.dailyAP += change;
 	}
 	
-	public void changeCO2(int change) {
+	public void changeCO2(float change) {
 		totalCO2 += change;
 	}
 	
@@ -83,7 +84,7 @@ public class Game extends TimerTask {
 		return totalAP;
 	}
 	
-	public int getCarbonFootPrint() {
+	public float getCarbonFootPrint() {
 		return totalCO2;
 	}
 	
@@ -95,7 +96,7 @@ public class Game extends TimerTask {
 		return totalMoney;
 	}
 	
-	public int getDailyCO2() {
+	public float getDailyCO2() {
 		return dailyCO2;
 	}
 	
@@ -130,6 +131,10 @@ public class Game extends TimerTask {
 		return onGoingActions;
 	}
 	
+	public List<Choice> getChoices() {
+		return choices;
+	}
+	
 	@Override
 	public String toString() {
 		String output = "daily income: 130 - " + getDailyExpenses() + " daily CO2: " + getDailyCO2() + " daily AP: " + getDailyActionPoints();
@@ -145,12 +150,37 @@ public class Game extends TimerTask {
 //		Timer timer = new Timer();
 //		timer.schedule(game, 0, 1000);
 		
-		Ongoing meatEating = new Ongoing("Meat Eating", null, 0, 0, 0, "meat eating");
-		Upgrade vegeGarden = new Upgrade("Vege Garden", 1000, null, 0, -10, 0, "vege garden");
-		Ongoing vegetarian = new Ongoing("Vegetarianism", vegeGarden, 0, 0, 0, "vegetarianism");
-		Choice diet = new Choice(meatEating, vegetarian);
+		game.changeDailyCO2((float) 28.9); //Powering home
+
 		
-		game.getUpgrades().add(vegeGarden);
+		
+		
+		//upgrade
+		Upgrade vegeGarden = new Upgrade("Vege Garden", 1000, null, 0, -5, 0, "By growing your own food, you are helping to reduce the high amounts of burning fossil fuels that fill our environment as a direct result of importing foods from commercial farmers!");
+		Upgrade solarPanel = new Upgrade("Solar Panel", 3000, null, 0, (float) -3.6, 0, "Solar power is a clean energy, this means that it does not produce any carbon dioxide into the atmosphere!");
+		Upgrade electricCar = new Upgrade("Electric Car", 30000, null, 0, (float) 0, 0, "Not only do Electric Vehicles reuce your cabron footprint, they can save you money!");
+		
+		
+		//ongoing
+		Ongoing meatEating = new Ongoing("Meat Eating", null, 0, (float) 3.65, 0, "The global average of water required to produce 1kg of beef is 15,400 litres!");
+		Ongoing vegetarian = new Ongoing("Vegetarianism", vegeGarden, 0, (float) 0.01, 0, "vegetarianism");
+		Ongoing driveElectricCar = new Ongoing("Electric Car", electricCar, 0, (float) 2.6, 0, "You are producing 46% less C02 by driving an electric car. If you walked or biked you would produce no C02!");
+		Ongoing driveNormalCar = new Ongoing("Petrol Car", null, 0, (float) 4.14, 0, "Fosisl fuels are expected to run out in the next 54 years at this rate. You might need to start walking if you don't get an electric vehicle!");
+		Ongoing lineDryer = new Ongoing("Clothes Line", null, 0, (float) 0, 0, "Drying your clothes on a line is a free way to take advantage of the suns own renuable energy");
+		Ongoing dryer = new Ongoing("Dryer", null, 0, (float) 0.85, 0, "Drying your clothes on a line is a free way to take advantage of the suns own renuable energy");
+		
+		//choice
+		Choice diet = new Choice(meatEating, vegetarian);
+		Choice transport = new Choice(driveNormalCar, driveElectricCar);
+		Choice dryingMethod = new Choice(dryer, lineDryer);
+		
+
+		
+		Collections.addAll(game.getUpgrades(), vegeGarden, solarPanel, electricCar);
+		
+		Collections.addAll(game.getChoices(), diet, transport, dryingMethod);
+		
+		Collections.addAll(game.getOngoingActions(), meatEating, vegetarian, driveElectricCar, driveNormalCar);
 		
 		for (int i = 0; i < game.getUpgrades().size(); i++) {
 			game.getUpgradeCounts().put(game.getUpgrades().get(i).getName(), 0);

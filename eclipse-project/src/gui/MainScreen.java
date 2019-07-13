@@ -78,10 +78,10 @@ public class MainScreen extends TimerTask {
 	
 	public void run() {
 		lblDailyMoney.setText("Daily money: " + Integer.toString(manager.DAILY_EARNINGS - manager.getDailyExpenses()));
-		lblDailyCo.setText("Daily CO2: " + Integer.toString(manager.getDailyCO2()));
+		lblDailyCo.setText("Daily CO2: " + Float.toString(manager.getDailyCO2()));
 		lblDailyAp.setText("Daily AP: " + Integer.toString(manager.getDailyActionPoints()));
 		lblTotalmoney.setText("Total money: " + Integer.toString(manager.getMoney()));
-		lblTotalCo.setText("Total CO2: " + Integer.toString(manager.getCarbonFootPrint()));
+		lblTotalCo.setText("Total CO2: " + Float.toString(manager.getCarbonFootPrint()));
 		lblTotalAp.setText("Total AP: " + Integer.toString(manager.getActionPoints()));
 		
 		String upgradesListString = "";

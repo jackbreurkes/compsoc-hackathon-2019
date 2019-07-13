@@ -4,12 +4,12 @@ public class Upgrade extends Ongoing {
 
 	private int cost;
 	
-	public Upgrade(String name, int cost, Upgrade prerequisite, int dailyExpense, int dailyCO2, int dailyActionPoints) {
+	public Upgrade(String name, int cost, Upgrade prerequisite, int dailyExpense, float dailyCO2, int dailyActionPoints) {
 		super(name, prerequisite, dailyExpense, dailyCO2, dailyActionPoints);
 		this.cost = cost;
 	}
 	
-	public Upgrade(String name, int cost, Upgrade prerequisite, int dailyExpense, int dailyCO2, int dailyActionPoints, String fact) {
+	public Upgrade(String name, int cost, Upgrade prerequisite, int dailyExpense, float dailyCO2, int dailyActionPoints, String fact) {
 		super(name, prerequisite, dailyExpense, dailyCO2, dailyActionPoints, fact);
 		this.cost = cost;
 	}

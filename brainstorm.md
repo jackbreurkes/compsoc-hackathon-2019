@@ -38,6 +38,7 @@ unlocked - 0.27 kg /c02
 
 BUYABLE
 * Solar panels
+Solar power is a clean energy, this means that it does not produce any carbon dioxide into the atmosphere
 * Electric car
 c02 = 2.6 kg/c02
 

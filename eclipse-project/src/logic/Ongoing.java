@@ -5,11 +5,11 @@ public class Ongoing {
 	private String name;
 	private Upgrade prerequisite;
 	private int dailyExpense;
-	private int dailyCO2;
+	private float dailyCO2;
 	private int dailyActionPoints;
 	private String fact = "";
 	
-	public Ongoing(String name, Upgrade prerequisite, int dailyExpense, int dailyCO2, int dailyActionPoints) {
+	public Ongoing(String name, Upgrade prerequisite, int dailyExpense, float dailyCO2, int dailyActionPoints) {
 		this.name = name;
 		this.prerequisite = prerequisite;
 		this.dailyExpense = dailyExpense;
@@ -17,7 +17,7 @@ public class Ongoing {
 		this.dailyActionPoints = dailyActionPoints;
 	}
 	
-	public Ongoing(String name, Upgrade prerequisite, int dailyExpense, int dailyCO2, int dailyActionPoints, String fact) {
+	public Ongoing(String name, Upgrade prerequisite, int dailyExpense, float dailyCO2, int dailyActionPoints, String fact) {
 		this(name, prerequisite, dailyExpense, dailyCO2, dailyActionPoints);
 		this.fact = fact;
 	}
