@@ -19,7 +19,13 @@ class OngoingTest {
 	@Test
 	void testOngoing() {
 		Ongoing ongoing = new Ongoing(null, 10, 10, 10, game);
-		//System.out.println(game.toString());
+		ongoing.ApplyEffects();
+	}
+	
+	@Test
+	void testPrerequisite() {
+		Ongoing ongoing = new Ongoing(null, 10, 10, 10, game);
+		ongoing.ApplyEffects();
 	}
 
 }

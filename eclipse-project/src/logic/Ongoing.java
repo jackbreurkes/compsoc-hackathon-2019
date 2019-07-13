@@ -22,14 +22,15 @@ public class Ongoing {
 		this.fact = fact;
 	}
 	
-	public void ApplyEffects() {
+	public boolean ApplyEffects() {
 		if (prerequisite != null && !gameManager.getOngoingActions().contains(prerequisite)) {
-			return;
+			return false;
 		}
 		
 		gameManager.changeDailyExpenses(dailyExpense);
 		gameManager.changeDailyCO2(dailyCO2);
 		gameManager.changeDailyActionPoints(dailyActionPoints);
+		return true;
 	}
 	
 	public void RemoveEffects() {

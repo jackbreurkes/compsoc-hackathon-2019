@@ -15,8 +15,12 @@ public class Upgrade extends Ongoing {
 	}
 	
 	@Override
-	public void ApplyEffects() {
-		super.ApplyEffects();
+	public boolean ApplyEffects() {
+		if (!super.ApplyEffects()) return false;
+		if (super.getGameManager().getMoney() < cost) {
+			return false;
+		}
 		super.getGameManager().changeMoney(-cost);
+		return true;
 	}
 }
