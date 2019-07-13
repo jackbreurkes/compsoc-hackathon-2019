@@ -3,6 +3,8 @@ package logic;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import gui.MainScreen;
@@ -10,21 +12,23 @@ import gui.MainScreen;
 public class Game extends TimerTask {
 	
 	private final int DAILY_EARNINGS = 130;
-	
 
-	int actionPoints;
-	int carbonFootPrint;
-	int money;
+	int totalAP;
+	int totalCO2;
+	int totalMoney;
 	int dailyExpenses;
 	int dailyCO2;
-	int dailyActionPoints;
-	int income;
+	int dailyAP;
 	ArrayList<Ongoing> onGoingActions = new ArrayList<Ongoing>();
+	List<Choice> choices = new ArrayList<Choice>();
 
 	
-	public Game() {
-		
+	public Game() { }
 
+	public Game(int initialExpenses, int initialDailyCO2, int initialDailyAP) {
+		dailyExpenses = initialExpenses;
+		dailyCO2 = initialDailyCO2;
+		dailyAP = initialDailyAP;
 	}
 	
 	/* create GUI */
@@ -35,15 +39,19 @@ public class Game extends TimerTask {
 	
 	/* Setters */
 	public void setActionPoints(int actionPoints) {
-		this.actionPoints = actionPoints;
+		this.totalAP = actionPoints;
 	}
 	
 	public void setCarbonFootPrint(int carbonFootPrint) {
-		this.carbonFootPrint = carbonFootPrint;
+		this.totalCO2 = carbonFootPrint;
 	}
 	
 	public void changeDailyExpenses(int change) {
 		this.dailyExpenses += change;
+	}
+	
+	public void setMoney(int money) {
+		this.totalMoney = money;
 	}
 	
 	public void changeDailyCO2(int change) {
@@ -51,36 +59,36 @@ public class Game extends TimerTask {
 	}
 	
 	public void changeDailyActionPoints(int change) {
-		this.dailyActionPoints += change;
+		this.dailyAP += change;
 	}
 	
-	public void setIncome(int income) {
-		this.income = income;
+	public void changeCO2(int change) {
+		totalCO2 += change;
+	}
+	
+	public void changeAP(int change) {
+		totalAP += change;
 	}
 	
 	public void changeMoney(int money) {
-		this.money += money;
+		this.totalMoney += money;
 	}
 	
 	/* getters */
 	public int getActionPoints() {
-		return actionPoints;
+		return totalAP;
 	}
 	
 	public int getCarbonFootPrint() {
-		return carbonFootPrint;
+		return totalCO2;
 	}
 	
 	public int getDailyExpenses() {
 		return dailyExpenses;
 	}
 	
-	public int getIncome() {
-		return income;
-	}
-	
 	public int getMoney() {
-		return money;
+		return totalMoney;
 	}
 	
 	public int getDailyCO2() {
@@ -88,14 +96,22 @@ public class Game extends TimerTask {
 	}
 	
 	public int getDailyActionPoints() {
-		return dailyActionPoints;
+		return dailyAP;
 	}
 	
 	public void run() {
-		money += DAILY_EARNINGS - dailyExpenses;
-		carbonFootPrint += dailyCO2;
-		actionPoints += dailyActionPoints;
-		//System.out.println(toString());
+		totalMoney += DAILY_EARNINGS - dailyExpenses;
+		totalCO2 += dailyCO2;
+		totalAP += dailyAP;
+		System.out.println(toString());
+	}
+	
+	public void addOngoingAction(Ongoing action) {
+		onGoingActions.add(action);
+	}
+	
+	public void removeOngoingAction(Ongoing action) {
+		onGoingActions.remove(action);
 	}
 	
 	public List<Ongoing> getOngoingActions() {
@@ -106,6 +122,7 @@ public class Game extends TimerTask {
 	public String toString() {
 		String output = "daily income: 130 - " + getDailyExpenses() + " daily CO2: " + getDailyCO2() + " daily AP: " + getDailyActionPoints();
 		output += "\ntotal money:  " + getMoney() + "        total CO2: " + getCarbonFootPrint() + "  total AP: " + getActionPoints();
+		output += "\n";
 		return output;
 	}
 	
@@ -116,5 +133,12 @@ public class Game extends TimerTask {
 		Timer timer = new Timer();
 		timer.schedule(game, 0, 1000);
 		game.launchMainScreen();
+		
+		Ongoing meatEating = new Ongoing(null, 0, 0, 0, "meat eating");
+		Upgrade vegeGarden = new Upgrade(10, null, 0, 0, 0, "vege garden");
+		Ongoing vegetarian = new Ongoing(vegeGarden, 0, 0, 0, "vegetarianism");
+		Choice diet = new Choice(meatEating, vegetarian);
+		
+//		diet.setOption(game, vegetarian);
 	}
 }

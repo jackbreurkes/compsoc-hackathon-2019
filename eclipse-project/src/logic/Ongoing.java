@@ -6,39 +6,40 @@ public class Ongoing {
 	private int dailyExpense;
 	private int dailyCO2;
 	private int dailyActionPoints;
-	private Game gameManager;
 	private String fact = "";
 	
-	public Ongoing(Upgrade prerequisite, int dailyExpense, int dailyCO2, int dailyActionPoints, Game gameManager) {
+	public Ongoing(Upgrade prerequisite, int dailyExpense, int dailyCO2, int dailyActionPoints) {
 		this.prerequisite = prerequisite;
 		this.dailyExpense = dailyExpense;
 		this.dailyCO2 = dailyCO2;
 		this.dailyActionPoints = dailyActionPoints;
-		this.gameManager = gameManager;
 	}
 	
-	public Ongoing(Upgrade prerequisite, int dailyExpense, int dailyCO2, int dailyActionPoints, Game gameManager, String fact) {
-		this(prerequisite, dailyExpense, dailyCO2, dailyActionPoints, gameManager);
+	public Ongoing(Upgrade prerequisite, int dailyExpense, int dailyCO2, int dailyActionPoints, String fact) {
+		this(prerequisite, dailyExpense, dailyCO2, dailyActionPoints);
 		this.fact = fact;
 	}
 	
-	public void ApplyEffects() {
+	public Upgrade getPrerequisite() {
+		return prerequisite;
+	}
+	
+	public boolean ApplyEffects(Game gameManager) {
 		if (prerequisite != null && !gameManager.getOngoingActions().contains(prerequisite)) {
-			return;
+			return false;
 		}
 		
 		gameManager.changeDailyExpenses(dailyExpense);
 		gameManager.changeDailyCO2(dailyCO2);
 		gameManager.changeDailyActionPoints(dailyActionPoints);
+		gameManager.addOngoingAction(this);
+		return true;
 	}
 	
-	public void RemoveEffects() {
+	public void RemoveEffects(Game gameManager) {
 		gameManager.changeDailyExpenses(-dailyExpense);
 		gameManager.changeDailyCO2(-dailyCO2);
 		gameManager.changeDailyActionPoints(-dailyActionPoints);
-	}
-	
-	protected Game getGameManager() {
-		return gameManager;
+		gameManager.removeOngoingAction(this);
 	}
 }
