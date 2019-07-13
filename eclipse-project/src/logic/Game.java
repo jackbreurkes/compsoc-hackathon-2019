@@ -95,7 +95,7 @@ public class Game extends TimerTask {
 		money += DAILY_EARNINGS - dailyExpenses;
 		carbonFootPrint += dailyCO2;
 		actionPoints += dailyActionPoints;
-		System.out.println(toString());
+		//System.out.println(toString());
 	}
 	
 	public List<Ongoing> getOngoingActions() {
