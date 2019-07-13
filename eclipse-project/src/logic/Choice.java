@@ -3,11 +3,13 @@ package logic;
 import java.util.Set;
 
 public class Choice {
+	private String name;
 	private Ongoing defaultOption;
 	private Ongoing lockedOption;
 	private Ongoing currentOption;
 	
-	public Choice(Ongoing defaultOption, Ongoing lockedOption) {
+	public Choice(String name, Ongoing defaultOption, Ongoing lockedOption) {
+		this.name = name;
 		this.defaultOption = defaultOption;
 		this.lockedOption = lockedOption;
 		currentOption = defaultOption;
@@ -20,6 +22,18 @@ public class Choice {
 		else if (option == lockedOption && game.getOngoingActions().contains(lockedOption.getPrerequisite())) {
 			currentOption = option;
 		}
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public Ongoing getDefaultOption() {
+		return defaultOption;
+	}
+	
+	public Ongoing getLockedOption() {
+		return lockedOption;
 	}
 	
 	public Ongoing getCurrentOption() {

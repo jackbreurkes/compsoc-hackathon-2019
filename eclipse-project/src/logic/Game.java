@@ -180,9 +180,9 @@ public class Game extends TimerTask {
 		Booster recycle = new Booster("Recycle", 0, 2, (float) -0.05, 0, "Currently, 79% of recyclable waste is still being put into landfills and 91% of plastic is not recycled");
 		
 		//choice
-		Choice diet = new Choice(meatEating, vegetarian);
-		Choice transport = new Choice(driveNormalCar, driveElectricCar);
-		Choice dryingMethod = new Choice(dryer, lineDryer);
+		Choice diet = new Choice("Diet", meatEating, vegetarian);
+		Choice transport = new Choice("Transport", driveNormalCar, driveElectricCar);
+		Choice dryingMethod = new Choice("Drying method", dryer, lineDryer);
 		
 		
 		

@@ -8,6 +8,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 
 import logic.Booster;
+import logic.Choice;
 import logic.Game;
 import logic.Upgrade;
 
@@ -36,6 +37,9 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.UIManager;
+import javax.swing.BoxLayout;
+import javax.swing.JRadioButton;
+import java.awt.Component;
 
 public class MainScreen extends TimerTask {
 	
@@ -78,6 +82,10 @@ public class MainScreen extends TimerTask {
 	
 	private DecimalFormat df = new DecimalFormat("#.##");
 	private JPanel choicesPanel;
+	private JPanel panel_1;
+	private JLabel lblNewLabel;
+	private JRadioButton rdbtnDefault;
+	private JRadioButton rdbtnLocked;
 
 
 	public MainScreen(Game manager) {
@@ -155,7 +163,7 @@ public class MainScreen extends TimerTask {
 		
 		createUpgradePanel();
 		createBoosterPanel();
-		
+		createChoicesPanel();
 	}
 	
 	public void createUpgradePanel() {
@@ -219,8 +227,57 @@ public class MainScreen extends TimerTask {
 	
 	public void createChoicesPanel() {
 		choicesPanel = new JPanel();
-		choicesPanel.setLayout(null);
 		tabbedPane.addTab("Choices", null, choicesPanel, null);
+		choicesPanel.setLayout(new BoxLayout(choicesPanel, BoxLayout.Y_AXIS));
+		
+		for (int i = 0; i < manager.getChoices().size(); i++) {
+			addChoicePanel(manager.getChoices().get(i));
+		}
+	}
+	
+	public void addChoicePanel(Choice choice) {
+		JPanel panel = new JPanel();
+		choicesPanel.add(panel);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		
+		JLabel newLabel = new JLabel(choice.getName());
+		newLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel.add(newLabel);
+		
+		JPanel panel_2 = new JPanel();
+		panel.add(panel_2);
+		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.X_AXIS));
+		
+		JRadioButton defButton = new JRadioButton(choice.getDefaultOption().getName());
+		panel_2.add(defButton);
+		
+		JRadioButton locked = new JRadioButton(choice.getLockedOption().getName());
+		panel_2.add(locked);
+		
+		defButton.setSelected(true);
+		
+		defButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				choice.setOption(manager, choice.getDefaultOption());
+				locked.setSelected(false);
+				run();
+			}
+		});
+		
+		locked.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				choice.setOption(manager, choice.getLockedOption());
+				if (choice.getCurrentOption() != choice.getLockedOption()) {
+					locked.setSelected(false);
+					System.out.println("cho");
+				} else {
+					defButton.setSelected(false);
+				}
+				run();
+			}
+		});
 	}
 	
 	public void createActionsPanel(JPanel panel) {
