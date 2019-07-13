@@ -256,11 +256,15 @@ public class MainScreen extends TimerTask {
 		
 		defButton.setSelected(true);
 		
+		//choice.getDefaultOption().ApplyEffects(manager);
+		
 		defButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				choice.setOption(manager, choice.getDefaultOption());
 				locked.setSelected(false);
+				choice.getLockedOption().RemoveEffects(manager);
+				choice.getDefaultOption().ApplyEffects(manager);
 				run();
 			}
 		});
@@ -275,6 +279,8 @@ public class MainScreen extends TimerTask {
 				} else {
 					defButton.setSelected(false);
 				}
+				choice.getDefaultOption().RemoveEffects(manager);
+				choice.getLockedOption().ApplyEffects(manager);
 				run();
 			}
 		});
