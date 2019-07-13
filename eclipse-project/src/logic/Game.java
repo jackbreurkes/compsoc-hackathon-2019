@@ -10,15 +10,13 @@ import gui.MainScreen;
 public class Game extends TimerTask {
 	
 	private final int DAILY_EARNINGS = 130;
-	
 
-	int actionPoints;
-	int carbonFootPrint;
-	int money;
+	int totalAP;
+	int totalCO2;
+	int totalMoney;
 	int dailyExpenses;
 	int dailyCO2;
-	int dailyActionPoints;
-	int income;
+	int dailyAP;
 	ArrayList<Ongoing> onGoingActions = new ArrayList<Ongoing>();
 
 	
@@ -27,7 +25,7 @@ public class Game extends TimerTask {
 	public Game(int initialExpenses, int initialDailyCO2, int initialDailyAP) {
 		dailyExpenses = initialExpenses;
 		dailyCO2 = initialDailyCO2;
-		dailyActionPoints = initialDailyAP;
+		dailyAP = initialDailyAP;
 	}
 	
 	/* create GUI */
@@ -38,11 +36,11 @@ public class Game extends TimerTask {
 	
 	/* Setters */
 	public void setActionPoints(int actionPoints) {
-		this.actionPoints = actionPoints;
+		this.totalAP = actionPoints;
 	}
 	
 	public void setCarbonFootPrint(int carbonFootPrint) {
-		this.carbonFootPrint = carbonFootPrint;
+		this.totalCO2 = carbonFootPrint;
 	}
 	
 	public void changeDailyExpenses(int change) {
@@ -50,7 +48,7 @@ public class Game extends TimerTask {
 	}
 	
 	public void setMoney(int money) {
-		this.money = money;
+		this.totalMoney = money;
 	}
 	
 	public void changeDailyCO2(int change) {
@@ -58,44 +56,36 @@ public class Game extends TimerTask {
 	}
 	
 	public void changeDailyActionPoints(int change) {
-		this.dailyActionPoints += change;
+		this.dailyAP += change;
 	}
 	
 	public void changeCO2(int change) {
-		carbonFootPrint += change;
+		totalCO2 += change;
 	}
 	
 	public void changeAP(int change) {
-		actionPoints += change;
-	}
-	
-	public void setIncome(int income) {
-		this.income = income;
+		totalAP += change;
 	}
 	
 	public void changeMoney(int money) {
-		this.money += money;
+		this.totalMoney += money;
 	}
 	
 	/* getters */
 	public int getActionPoints() {
-		return actionPoints;
+		return totalAP;
 	}
 	
 	public int getCarbonFootPrint() {
-		return carbonFootPrint;
+		return totalCO2;
 	}
 	
 	public int getDailyExpenses() {
 		return dailyExpenses;
 	}
 	
-	public int getIncome() {
-		return income;
-	}
-	
 	public int getMoney() {
-		return money;
+		return totalMoney;
 	}
 	
 	public int getDailyCO2() {
@@ -103,13 +93,13 @@ public class Game extends TimerTask {
 	}
 	
 	public int getDailyActionPoints() {
-		return dailyActionPoints;
+		return dailyAP;
 	}
 	
 	public void run() {
-		money += DAILY_EARNINGS - dailyExpenses;
-		carbonFootPrint += dailyCO2;
-		actionPoints += dailyActionPoints;
+		totalMoney += DAILY_EARNINGS - dailyExpenses;
+		totalCO2 += dailyCO2;
+		totalAP += dailyAP;
 		System.out.println(toString());
 	}
 	
@@ -140,5 +130,7 @@ public class Game extends TimerTask {
 		Timer timer = new Timer();
 		timer.schedule(game, 0, 1000);
 		game.launchMainScreen();
+		
+		
 	}
 }
