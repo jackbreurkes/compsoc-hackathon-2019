@@ -2,26 +2,36 @@ package logic;
 
 
 public class Ongoing {
+	private String name;
 	private Upgrade prerequisite;
 	private int dailyExpense;
 	private int dailyCO2;
 	private int dailyActionPoints;
 	private String fact = "";
 	
-	public Ongoing(Upgrade prerequisite, int dailyExpense, int dailyCO2, int dailyActionPoints) {
+	public Ongoing(String name, Upgrade prerequisite, int dailyExpense, int dailyCO2, int dailyActionPoints) {
+		this.name = name;
 		this.prerequisite = prerequisite;
 		this.dailyExpense = dailyExpense;
 		this.dailyCO2 = dailyCO2;
 		this.dailyActionPoints = dailyActionPoints;
 	}
 	
-	public Ongoing(Upgrade prerequisite, int dailyExpense, int dailyCO2, int dailyActionPoints, String fact) {
-		this(prerequisite, dailyExpense, dailyCO2, dailyActionPoints);
+	public Ongoing(String name, Upgrade prerequisite, int dailyExpense, int dailyCO2, int dailyActionPoints, String fact) {
+		this(name, prerequisite, dailyExpense, dailyCO2, dailyActionPoints);
 		this.fact = fact;
 	}
 	
 	public Upgrade getPrerequisite() {
 		return prerequisite;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public String getFact() {
+		return fact;
 	}
 	
 	public boolean ApplyEffects(Game gameManager) {

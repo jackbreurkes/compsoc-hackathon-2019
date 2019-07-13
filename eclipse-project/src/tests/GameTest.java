@@ -27,9 +27,9 @@ class GameTest {
 	void testChoices() {
 		Game game = new Game(30, 40, 5);
 		
-		Ongoing meatEating = new Ongoing(null, 10, 10, 10, "meat eating");
-		Upgrade vegeGarden = new Upgrade(10, null, 0, 0, 0, "vege garden");
-		Ongoing vegetarian = new Ongoing(vegeGarden, 0, 0, 0, "vegetarianism");
+		Ongoing meatEating = new Ongoing("", null, 10, 10, 10, "meat eating");
+		Upgrade vegeGarden = new Upgrade("", 100, null, 0, 0, 0, "vege garden");
+		Ongoing vegetarian = new Ongoing("", vegeGarden, 0, 0, 0, "vegetarianism");
 		Choice diet = new Choice(meatEating, vegetarian);
 		
 		diet.setOption(game, vegetarian);

@@ -4,14 +4,16 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import gui.MainScreen;
 
 public class Game extends TimerTask {
 	
-	private final int DAILY_EARNINGS = 130;
+	public final int DAILY_EARNINGS = 130;
 
 	int totalAP;
 	int totalCO2;
@@ -21,6 +23,8 @@ public class Game extends TimerTask {
 	int dailyAP;
 	ArrayList<Ongoing> onGoingActions = new ArrayList<Ongoing>();
 	List<Choice> choices = new ArrayList<Choice>();
+	List<Upgrade> upgrades = new ArrayList<Upgrade>();
+	Map<String, Integer> upgradeCounters = new HashMap<String, Integer>();
 
 	
 	public Game() { }
@@ -99,6 +103,14 @@ public class Game extends TimerTask {
 		return dailyAP;
 	}
 	
+	public List<Upgrade> getUpgrades() {
+		return upgrades;
+	}
+	
+	public Map<String, Integer> getUpgradeCounts() {
+		return upgradeCounters;
+	}
+	
 	public void run() {
 		totalMoney += DAILY_EARNINGS - dailyExpenses;
 		totalCO2 += dailyCO2;
@@ -130,14 +142,21 @@ public class Game extends TimerTask {
 
 	public static void main(String[] args) {
 		Game game = new Game();
-		Timer timer = new Timer();
-		timer.schedule(game, 0, 1000);
-		game.launchMainScreen();
+//		Timer timer = new Timer();
+//		timer.schedule(game, 0, 1000);
 		
-		Ongoing meatEating = new Ongoing(null, 0, 0, 0, "meat eating");
-		Upgrade vegeGarden = new Upgrade(10, null, 0, 0, 0, "vege garden");
-		Ongoing vegetarian = new Ongoing(vegeGarden, 0, 0, 0, "vegetarianism");
+		Ongoing meatEating = new Ongoing("Meat Eating", null, 0, 0, 0, "meat eating");
+		Upgrade vegeGarden = new Upgrade("Vege Garden", 1000, null, 0, -10, 0, "vege garden");
+		Ongoing vegetarian = new Ongoing("Vegetarianism", vegeGarden, 0, 0, 0, "vegetarianism");
 		Choice diet = new Choice(meatEating, vegetarian);
+		
+		game.getUpgrades().add(vegeGarden);
+		
+		for (int i = 0; i < game.getUpgrades().size(); i++) {
+			game.getUpgradeCounts().put(game.getUpgrades().get(i).getName(), 0);
+		}
+		
+		game.launchMainScreen();
 		
 //		diet.setOption(game, vegetarian);
 	}

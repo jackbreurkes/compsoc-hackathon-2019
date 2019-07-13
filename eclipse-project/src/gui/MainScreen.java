@@ -7,9 +7,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 
-import org.graalvm.compiler.nodes.InliningLog.UpdateScope;
-
 import logic.Game;
+import logic.Upgrade;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -18,6 +18,10 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.ScrollPane;
 import java.awt.TextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
@@ -25,8 +29,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JTextArea;
+import javax.swing.JLabel;
 
-public class MainScreen {
+public class MainScreen extends TimerTask {
 	
 	private final int WIDTH = 800, HEIGHT = 600;
 	private Game manager;
@@ -55,12 +60,31 @@ public class MainScreen {
 	int itemYCoord = 10;
 	
 	private JFrame frame;
+	private JLabel lblDailyMoney;
+	private JLabel lblDailyCo;
+	private JLabel lblDailyAp;
+	private JLabel lblTotalmoney;
+	private JLabel lblTotalCo;
+	private JLabel lblTotalAp;
 
 
 	public MainScreen(Game manager) {
 		this.manager = manager;
 		initialize();
 		frame.setVisible(true);
+		
+		Timer timer = new Timer();
+		timer.schedule(manager, 0, 1000);
+		timer.schedule(this, 0, 100);
+	}
+	
+	public void run() {
+		lblDailyMoney.setText("Daily money: " + Integer.toString(manager.DAILY_EARNINGS - manager.getDailyExpenses()));
+		lblDailyCo.setText("Daily CO2: " + Integer.toString(manager.getDailyCO2()));
+		lblDailyAp.setText("Daily AP: " + Integer.toString(manager.getDailyActionPoints()));
+		lblTotalmoney.setText("Total money: " + Integer.toString(manager.getMoney()));
+		lblTotalCo.setText("Total CO2: " + Integer.toString(manager.getCarbonFootPrint()));
+		lblTotalAp.setText("Total AP: " + Integer.toString(manager.getActionPoints()));
 	}
 
 	private void initialize() {
@@ -120,17 +144,29 @@ public class MainScreen {
 		actionsPanel = new JPanel();
 		actionsPanel.setLayout(null);
 		tabbedPane.addTab("Actions", null, actionsPanel, null);
+
 		
 		int height = 10;
-		for (int i = 0; i < 4; i++) {
-			addButton(actionsPanel, height);
+		for (int i = 0; i < manager.getUpgrades().size(); i++) {
+			addButton(actionsPanel, height, manager.getUpgrades().get(i));
 			height += 60;
 		}
 		
 	}
 	
-	public void addButton(JPanel panel, int y) {
-		JButton button = new JButton("Test");
+	
+	public void addButton(JPanel panel, int y, Upgrade upgrade) {
+		JButton button = new JButton(upgrade.getName());
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				upgrade.ApplyEffects(manager);
+				manager.getUpgradeCounts().put(upgrade.getName(), manager.getUpgradeCounts().get(upgrade.getName()) + 1);
+				System.out.println(manager.getUpgradeCounts().get(upgrade.getName()));
+				// TODO move into the applyEffects stuff
+				run();
+			}
+		});
 		button.setBounds(25, y, 200, 50);
 		panel.add(button);
 		
@@ -151,23 +187,27 @@ public class MainScreen {
 	
 	public void createGameInfoPanel() {
 		gameInfoPanel = new JPanel();
-		gameInfoPanel.setBounds(25, 0, 500, 30);
+		gameInfoPanel.setBounds(25, 0, 500, 41);
 		gameInfoPanel.setBackground(Color.GREEN);
 		rightPanel.add(gameInfoPanel);
 		
-		totalMoneyTextField = createInfoTextFields();
+		lblDailyMoney = new JLabel("Daily Money:");
+		gameInfoPanel.add(lblDailyMoney);
 		
-		totalApTextField = createInfoTextFields();
+		lblDailyCo = new JLabel("Daily CO2: ");
+		gameInfoPanel.add(lblDailyCo);
 		
-		totalCarbonTextField = createInfoTextFields();
-	}
-	
-	public JTextField createInfoTextFields() {
-		JTextField textFeild = new JTextField();
-		textFeild.setText("TESTING");
-		gameInfoPanel.add(textFeild);
+		lblDailyAp = new JLabel("Daily AP:");
+		gameInfoPanel.add(lblDailyAp);
 		
-		return textFeild;
+		lblTotalmoney = new JLabel("Total Money:");
+		gameInfoPanel.add(lblTotalmoney);
+		
+		lblTotalCo = new JLabel("Total CO2: ");
+		gameInfoPanel.add(lblTotalCo);
+		
+		lblTotalAp = new JLabel("Total AP: ");
+		gameInfoPanel.add(lblTotalAp);
 	}
 	
 	public void updateGameInfoTextFields() {

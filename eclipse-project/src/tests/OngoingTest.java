@@ -13,7 +13,7 @@ class OngoingTest {
 	@Test
 	void testOngoing() {
 		Game game = new Game();
-		Ongoing ongoing = new Ongoing(null, 10, 10, 10);
+		Ongoing ongoing = new Ongoing("", null, 10, 10, 10);
 		ongoing.ApplyEffects(game);
 		
 		assertEquals(10, game.getDailyExpenses());
@@ -26,8 +26,8 @@ class OngoingTest {
 	void testPrerequisite() {
 		Game game = new Game();
 		
-		Upgrade upgrade = new Upgrade(10, null, 10, 10, 10);
-		Ongoing ongoing = new Ongoing(upgrade, 10, 10, 10);
+		Upgrade upgrade = new Upgrade("", 10, null, 10, 10, 10);
+		Ongoing ongoing = new Ongoing("", upgrade, 10, 10, 10);
 
 		ongoing.ApplyEffects(game);
 		assertFalse(game.getOngoingActions().contains(ongoing));

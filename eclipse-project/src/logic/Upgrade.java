@@ -4,24 +4,24 @@ public class Upgrade extends Ongoing {
 
 	private int cost;
 	
-	public Upgrade(int cost, Upgrade prerequisite, int dailyExpense, int dailyCO2, int dailyActionPoints) {
-		super(prerequisite, dailyExpense, dailyCO2, dailyActionPoints);
+	public Upgrade(String name, int cost, Upgrade prerequisite, int dailyExpense, int dailyCO2, int dailyActionPoints) {
+		super(name, prerequisite, dailyExpense, dailyCO2, dailyActionPoints);
 		this.cost = cost;
 	}
 	
-	public Upgrade(int cost, Upgrade prerequisite, int dailyExpense, int dailyCO2, int dailyActionPoints, String fact) {
-		super(prerequisite, dailyExpense, dailyCO2, dailyActionPoints, fact);
+	public Upgrade(String name, int cost, Upgrade prerequisite, int dailyExpense, int dailyCO2, int dailyActionPoints, String fact) {
+		super(name, prerequisite, dailyExpense, dailyCO2, dailyActionPoints, fact);
 		this.cost = cost;
 	}
 	
 	@Override
 	public boolean ApplyEffects(Game gameManager) {
-		if (!super.ApplyEffects(gameManager)) return false;
-		
 		if (gameManager.getMoney() < cost) {
 			return false;
 		}
+		if (!super.ApplyEffects(gameManager)) return false;
 		gameManager.changeMoney(-cost);
+		cost *= 1.3;
 		return true;
 	}
 }

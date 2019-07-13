@@ -12,7 +12,7 @@ class UpgradeTest {
 	@Test
 	void testUpgrade() {
 		Game game = new Game();
-		Upgrade upgrade = new Upgrade(10, null, 10, 10, 10);
+		Upgrade upgrade = new Upgrade("", 10, null, 10, 10, 10);
 		
 		game.setMoney(100);
 		upgrade.ApplyEffects(game);
@@ -22,8 +22,8 @@ class UpgradeTest {
 	@Test
 	void testPrerequisite() {
 		Game game = new Game();
-		Upgrade upgrade1 = new Upgrade(10, null, 10, 10, 10);
-		Upgrade upgrade2 = new Upgrade(10, upgrade1, 10, 10, 10);
+		Upgrade upgrade1 = new Upgrade("", 10, null, 10, 10, 10);
+		Upgrade upgrade2 = new Upgrade("", 10, upgrade1, 10, 10, 10);
 		
 		game.setMoney(100);
 		upgrade2.ApplyEffects(game);
