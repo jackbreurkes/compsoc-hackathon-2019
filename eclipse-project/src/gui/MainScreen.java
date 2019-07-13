@@ -33,6 +33,8 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
+import java.awt.Font;
+import net.miginfocom.swing.MigLayout;
 
 public class MainScreen extends TimerTask {
 	
@@ -60,6 +62,7 @@ public class MainScreen extends TimerTask {
 	private JTextField dailyApTextField;
 	
 	JTextPane infoTextPane;
+	JTextPane txtpnCurrentUpgrades;
 	int itemYCoord = 10;
 	
 	private JFrame frame;
@@ -72,7 +75,7 @@ public class MainScreen extends TimerTask {
 	private JPanel boostersPanel;
 	
 	
-	private DecimalFormat df = new DecimalFormat("#.####");
+	private DecimalFormat df = new DecimalFormat("#.##");
 
 
 	public MainScreen(Game manager) {
@@ -92,6 +95,12 @@ public class MainScreen extends TimerTask {
 		lblTotalmoney.setText("Total money: " + Integer.toString(manager.getMoney()));
 		lblTotalCo.setText("Total CO2: " + df.format(manager.getCarbonFootPrint()));
 		lblTotalAp.setText("Total AP: " + Integer.toString(manager.getActionPoints()));
+		
+		String upgradesListString = "";
+		for (Map.Entry<String, Integer> entry : manager.getUpgradeCounts().entrySet()) {
+			upgradesListString += String.format("%-30s %d\n", entry.getKey(), entry.getValue());
+		}
+		txtpnCurrentUpgrades.setText(upgradesListString);
 	}
 
 	private void initialize() {
@@ -150,20 +159,19 @@ public class MainScreen extends TimerTask {
 	public void createUpgradePanel() {
 		actionsPanel = new JPanel();
 		actionsPanel.setLayout(null);
-		tabbedPane.addTab("Actions", null, actionsPanel, null);
-
+		tabbedPane.addTab("Upgrades", null, actionsPanel, null);
 		
 		int height = 10;
 		for (int i = 0; i < manager.getUpgrades().size(); i++) {
-			addButton(actionsPanel, height, manager.getUpgrades().get(i));
+			addUpgradeButton(actionsPanel, height, manager.getUpgrades().get(i));
 			height += 60;
 		}
 		
 	}
 	
 	
-	public void addButton(JPanel panel, int y, Upgrade upgrade) {
-		JButton button = new JButton(upgrade.getName());
+	public void addUpgradeButton(JPanel panel, int y, Upgrade upgrade) {
+		JButton button = new JButton(upgrade.getName() + " ($" + upgrade.getCost() + ")");
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -224,24 +232,25 @@ public class MainScreen extends TimerTask {
 		gameInfoPanel.setBounds(25, 0, 500, 41);
 		gameInfoPanel.setBackground(Color.GREEN);
 		rightPanel.add(gameInfoPanel);
+		gameInfoPanel.setLayout(new MigLayout("", "[88px,grow][74px,grow][61px,grow]", "[15px][]"));
 		
 		lblDailyMoney = new JLabel("Daily Money:");
-		gameInfoPanel.add(lblDailyMoney);
+		gameInfoPanel.add(lblDailyMoney, "cell 0 0,alignx left,aligny top");
 		
 		lblDailyCo = new JLabel("Daily CO2: ");
-		gameInfoPanel.add(lblDailyCo);
+		gameInfoPanel.add(lblDailyCo, "cell 1 0,alignx left,aligny top");
 		
 		lblDailyAp = new JLabel("Daily AP:");
-		gameInfoPanel.add(lblDailyAp);
+		gameInfoPanel.add(lblDailyAp, "cell 2 0,alignx left,aligny top");
 		
 		lblTotalmoney = new JLabel("Total Money:");
-		gameInfoPanel.add(lblTotalmoney);
+		gameInfoPanel.add(lblTotalmoney, "cell 0 1,alignx left,aligny top");
 		
 		lblTotalCo = new JLabel("Total CO2: ");
-		gameInfoPanel.add(lblTotalCo);
+		gameInfoPanel.add(lblTotalCo, "cell 1 1,alignx left,aligny top");
 		
 		lblTotalAp = new JLabel("Total AP: ");
-		gameInfoPanel.add(lblTotalAp);
+		gameInfoPanel.add(lblTotalAp, "cell 2 1");
 	}
 	
 	public void updateGameInfoTextFields() {
@@ -268,21 +277,17 @@ public class MainScreen extends TimerTask {
 		rightPanel.add(screenPanel);
 		screenPanel.setLayout(null);
 		
-		for (int i = 0; i < 5; i++) {
-			addItemToInventory();
-		}
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(12, 12, 476, 306);
+		screenPanel.add(scrollPane);
 		
-	}
-	
-	public void addItemToInventory() {
-		//y = 30 * num items in inventory
-		JTextField textArea = new JTextField();
-		textArea.setText("This is a test"); // change to item description
-		textArea.setAlignmentY(SwingConstants.CENTER);
-		textArea.setEditable(false);
-		textArea.setBounds(10, itemYCoord, 480, 20);
-		screenPanel.add(textArea);
+		txtpnCurrentUpgrades = new JTextPane();
+		txtpnCurrentUpgrades.setFont(new Font("Courier 10 Pitch", Font.PLAIN, 14));
+		scrollPane.setViewportView(txtpnCurrentUpgrades);
+		txtpnCurrentUpgrades.setText("Current Upgrades");
 		
-		itemYCoord += 40;
+		JLabel lblUpgrades = new JLabel("Upgrades");
+		scrollPane.setColumnHeaderView(lblUpgrades);
+		
 	}
 }
