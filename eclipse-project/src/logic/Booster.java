@@ -9,15 +9,16 @@ public class Booster {
 	private int APChange;
 	private String fact;
 	
-	public Booster(int cost, int actionPointCost, int CO2Change, int APChange) {
+	public Booster(String name, int cost, int actionPointCost, int CO2Change, int APChange) {
+		this.name = name;
 		this.cost = cost;
 		this.actionPointCost = actionPointCost;
 		this.CO2Change = CO2Change;
 		this.APChange = APChange;
 	}
 	
-	public Booster(int cost, int actionPointCost, int CO2Change, int APChange, String fact) {
-		this(cost, actionPointCost, CO2Change, APChange);
+	public Booster(String name, int cost, int actionPointCost, int CO2Change, int APChange, String fact) {
+		this(name, cost, actionPointCost, CO2Change, APChange);
 		this.fact = fact;
 	}
 	

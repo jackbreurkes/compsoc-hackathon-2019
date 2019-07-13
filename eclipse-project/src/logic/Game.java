@@ -25,6 +25,7 @@ public class Game extends TimerTask {
 	ArrayList<Ongoing> onGoingActions = new ArrayList<Ongoing>();
 	List<Choice> choices = new ArrayList<Choice>();
 	List<Upgrade> upgrades = new ArrayList<Upgrade>();
+	List<Booster> boosters = new ArrayList<Booster>();
 	Map<String, Integer> upgradeCounters = new HashMap<String, Integer>();
 
 	
@@ -131,6 +132,10 @@ public class Game extends TimerTask {
 		return onGoingActions;
 	}
 	
+	public List<Booster> getBoosters() {
+		return boosters;
+	}
+	
 	public List<Choice> getChoices() {
 		return choices;
 	}
@@ -169,11 +174,16 @@ public class Game extends TimerTask {
 		Ongoing lineDryer = new Ongoing("Clothes Line", null, 0, (float) 0, 0, "Drying your clothes on a line is a free way to take advantage of the suns own renuable energy");
 		Ongoing dryer = new Ongoing("Dryer", null, 0, (float) 0.85, 0, "Drying your clothes on a line is a free way to take advantage of the suns own renuable energy");
 		
+		//booster
+		Booster test = new Booster("test", 20, 0, -100, 10);
+		Booster test2 = new Booster("test2", 0, 10, -200, 0);
+		
 		//choice
 		Choice diet = new Choice(meatEating, vegetarian);
 		Choice transport = new Choice(driveNormalCar, driveElectricCar);
 		Choice dryingMethod = new Choice(dryer, lineDryer);
 		
+
 
 		
 		Collections.addAll(game.getUpgrades(), vegeGarden, solarPanel, electricCar);
@@ -181,6 +191,8 @@ public class Game extends TimerTask {
 		Collections.addAll(game.getChoices(), diet, transport, dryingMethod);
 		
 		Collections.addAll(game.getOngoingActions(), meatEating, vegetarian, driveElectricCar, driveNormalCar);
+		
+		Collections.addAll(game.getBoosters(), test, test2);
 		
 		for (int i = 0; i < game.getUpgrades().size(); i++) {
 			game.getUpgradeCounts().put(game.getUpgrades().get(i).getName(), 0);

@@ -21,6 +21,7 @@ import java.awt.ScrollPane;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -64,6 +65,9 @@ public class MainScreen extends TimerTask {
 	private JLabel lblTotalCo;
 	private JLabel lblTotalAp;
 	private JPanel boostersPanel;
+	
+	
+	private DecimalFormat df = new DecimalFormat("#.####");
 
 
 	public MainScreen(Game manager) {
@@ -78,10 +82,10 @@ public class MainScreen extends TimerTask {
 	
 	public void run() {
 		lblDailyMoney.setText("Daily money: " + Integer.toString(manager.DAILY_EARNINGS - manager.getDailyExpenses()));
-		lblDailyCo.setText("Daily CO2: " + Float.toString(manager.getDailyCO2()));
+		lblDailyCo.setText("Daily CO2: " + df.format(manager.getDailyCO2()));
 		lblDailyAp.setText("Daily AP: " + Integer.toString(manager.getDailyActionPoints()));
 		lblTotalmoney.setText("Total money: " + Integer.toString(manager.getMoney()));
-		lblTotalCo.setText("Total CO2: " + Float.toString(manager.getCarbonFootPrint()));
+		lblTotalCo.setText("Total CO2: " + df.format(manager.getCarbonFootPrint()));
 		lblTotalAp.setText("Total AP: " + Integer.toString(manager.getActionPoints()));
 		
 		String upgradesListString = "";
@@ -140,7 +144,7 @@ public class MainScreen extends TimerTask {
 		leftPanel.add(tabbedPane);
 		
 		createUpgradePanel();
-
+		createBoosterPanel();
 		
 	}
 	
@@ -176,16 +180,18 @@ public class MainScreen extends TimerTask {
 	
 	public void createBoosterPanel() {
 		boostersPanel = new JPanel();
-		tabbedPane.addTab("New tab", null, boostersPanel, null);
+		boostersPanel.setLayout(null);
+		tabbedPane.addTab("Boosters", null, boostersPanel, null);
 		
 		int height = 10;
-		for (int i = 0; i < manager.getUpgrades().size(); i++) {
-			addBoosterButton(actionsPanel, height, manager.getUpgrades().get(i));
+		for (int i = 0; i < manager.getBoosters().size(); i++) {
+			addBoosterButton(boostersPanel, height, manager.getBoosters().get(i));
 			height += 60;
 		}
 	}
 	
 	public void addBoosterButton(JPanel panel, int y, Booster booster) {
+		System.out.println(booster.getName());
 		JButton button = new JButton(booster.getName() + " ($" + booster.getCost() + ", AP:" + booster.getAPCost() + ")");
 		button.addActionListener(new ActionListener() {
 			@Override
