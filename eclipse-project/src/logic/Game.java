@@ -175,8 +175,9 @@ public class Game extends TimerTask {
 		Ongoing dryer = new Ongoing("Dryer", null, 0, (float) 0.85, 0, "Drying your clothes on a line is a free way to take advantage of the suns own renuable energy");
 		
 		//booster
-		Booster planttree = new Booster("Plant Tree", 100, 1, (float) -0.06, 0, "On average, an acre of forest removes 2,500kg of C02 out of the atmosphere annually");
-		Booster coffee = new Booster("Coffee", 3, 0, (float) 0.2, 1, "");
+		Booster plantTree = new Booster("Plant Tree", 100, 2, (float) -0.06, 0, "On average, an acre of forest removes 2,500kg of C02 out of the atmosphere annually");
+		Booster coffee = new Booster("Coffee", 3, 0, (float) 0.2, 1, "Around 18,900 litres of water is needed to produce 1kg of coffee beans");
+		Booster recycle = new Booster("Recycle", 0, 2, (float) -0.05, 0, "Currently, 79% of recyclable waste is still being put into landfills and 91% of plastic is not recycled");
 		
 		//choice
 		Choice diet = new Choice(meatEating, vegetarian);
@@ -191,7 +192,7 @@ public class Game extends TimerTask {
 		
 		Collections.addAll(game.getOngoingActions(), meatEating, vegetarian, driveElectricCar, driveNormalCar);
 		
-		Collections.addAll(game.getBoosters(), test, test2);
+		Collections.addAll(game.getBoosters(), plantTree, coffee, recycle);
 		
 		for (int i = 0; i < game.getUpgrades().size(); i++) {
 			game.getUpgradeCounts().put(game.getUpgrades().get(i).getName(), 0);
