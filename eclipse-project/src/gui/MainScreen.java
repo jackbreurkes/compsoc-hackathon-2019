@@ -35,6 +35,7 @@ import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import java.awt.Font;
 import net.miginfocom.swing.MigLayout;
+import javax.swing.UIManager;
 
 public class MainScreen extends TimerTask {
 	
@@ -126,7 +127,7 @@ public class MainScreen extends TimerTask {
 		frame.getContentPane().setLayout(gridBagLayout);
 		
 		leftPanel = new JPanel();
-		leftPanel.setBackground(Color.BLACK);
+		leftPanel.setBackground(UIManager.getColor("Button.background"));
 		leftPanel.setLayout(null);
 		GridBagConstraints gbc_leftPanel_1 = new GridBagConstraints();
 		gbc_leftPanel_1.fill = GridBagConstraints.BOTH;
@@ -229,7 +230,7 @@ public class MainScreen extends TimerTask {
 	
 	public void createGameInfoPanel() {
 		gameInfoPanel = new JPanel();
-		gameInfoPanel.setBounds(25, 0, 500, 41);
+		gameInfoPanel.setBounds(25, 0, 500, 47);
 		gameInfoPanel.setBackground(Color.GREEN);
 		rightPanel.add(gameInfoPanel);
 		gameInfoPanel.setLayout(new MigLayout("", "[88px,grow][74px,grow][61px,grow]", "[15px][]"));
@@ -244,7 +245,7 @@ public class MainScreen extends TimerTask {
 		gameInfoPanel.add(lblDailyAp, "cell 2 0,alignx left,aligny top");
 		
 		lblTotalmoney = new JLabel("Total Money:");
-		gameInfoPanel.add(lblTotalmoney, "cell 0 1,alignx left,aligny top");
+		gameInfoPanel.add(lblTotalmoney, "cell 0 1,alignx left,aligny center");
 		
 		lblTotalCo = new JLabel("Total CO2: ");
 		gameInfoPanel.add(lblTotalCo, "cell 1 1,alignx left,aligny top");
@@ -259,13 +260,13 @@ public class MainScreen extends TimerTask {
 	
 	public void createInfoPanel() {
 		infoPanel = new JPanel();
-		infoPanel.setBounds(25, 50, 500, 150);
+		infoPanel.setBounds(25, 59, 500, 141);
 		infoPanel.setBackground(Color.CYAN);
 		rightPanel.add(infoPanel);
 		infoPanel.setLayout(null);
 		
 		infoTextPane = new JTextPane();
-		infoTextPane.setBounds(12, 12, 476, 88);
+		infoTextPane.setBounds(12, 12, 476, 117);
 		infoTextPane.setEditable(false);
 		infoPanel.add(infoTextPane);
 	}
