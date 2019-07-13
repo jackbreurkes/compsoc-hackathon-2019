@@ -30,6 +30,7 @@ public class Ongoing {
 		gameManager.changeDailyExpenses(dailyExpense);
 		gameManager.changeDailyCO2(dailyCO2);
 		gameManager.changeDailyActionPoints(dailyActionPoints);
+		gameManager.addOngoingAction(this);
 		return true;
 	}
 	
@@ -37,6 +38,7 @@ public class Ongoing {
 		gameManager.changeDailyExpenses(-dailyExpense);
 		gameManager.changeDailyCO2(-dailyCO2);
 		gameManager.changeDailyActionPoints(-dailyActionPoints);
+		gameManager.removeOngoingAction(this);
 	}
 	
 	protected Game getGameManager() {
