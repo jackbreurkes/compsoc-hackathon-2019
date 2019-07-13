@@ -3,6 +3,8 @@ package logic;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import gui.MainScreen;
@@ -18,6 +20,7 @@ public class Game extends TimerTask {
 	int dailyCO2;
 	int dailyAP;
 	ArrayList<Ongoing> onGoingActions = new ArrayList<Ongoing>();
+	List<Choice> choices = new ArrayList<Choice>();
 
 	
 	public Game() { }
@@ -131,6 +134,11 @@ public class Game extends TimerTask {
 		timer.schedule(game, 0, 1000);
 		game.launchMainScreen();
 		
+		Ongoing meatEating = new Ongoing(null, 0, 0, 0, "meat eating");
+		Upgrade vegeGarden = new Upgrade(10, null, 0, 0, 0, "vege garden");
+		Ongoing vegetarian = new Ongoing(vegeGarden, 0, 0, 0, "vegetarianism");
+		Choice diet = new Choice(meatEating, vegetarian);
 		
+//		diet.setOption(game, vegetarian);
 	}
 }

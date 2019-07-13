@@ -20,6 +20,10 @@ public class Ongoing {
 		this.fact = fact;
 	}
 	
+	public Upgrade getPrerequisite() {
+		return prerequisite;
+	}
+	
 	public boolean ApplyEffects(Game gameManager) {
 		if (prerequisite != null && !gameManager.getOngoingActions().contains(prerequisite)) {
 			return false;
