@@ -1,5 +1,6 @@
 package logic;
 
+
 public class Ongoing {
 	private Upgrade prerequisite;
 	private int dailyExpense;
@@ -22,10 +23,22 @@ public class Ongoing {
 	}
 	
 	public void ApplyEffects() {
+		if (prerequisite != null && !gameManager.getOngoingActions().contains(prerequisite)) {
+			return;
+		}
 		
+		gameManager.changeDailyExpenses(dailyExpense);
+		gameManager.changeDailyCO2(dailyCO2);
+		gameManager.changeDailyActionPoints(dailyActionPoints);
 	}
 	
 	public void RemoveEffects() {
-		
+		gameManager.changeDailyExpenses(-dailyExpense);
+		gameManager.changeDailyCO2(-dailyCO2);
+		gameManager.changeDailyActionPoints(-dailyActionPoints);
+	}
+	
+	protected Game getGameManager() {
+		return gameManager;
 	}
 }
