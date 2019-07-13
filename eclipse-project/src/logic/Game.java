@@ -175,8 +175,8 @@ public class Game extends TimerTask {
 		Ongoing dryer = new Ongoing("Dryer", null, 0, (float) 0.85, 0, "Drying your clothes on a line is a free way to take advantage of the suns own renuable energy");
 		
 		//booster
-		Booster test = new Booster("test", 20, 0, -100, 10);
-		Booster test2 = new Booster("test2", 0, 10, -200, 0);
+		Booster planttree = new Booster("Plant Tree", 100, 1, (float) -0.06, 0, "On average, an acre of forest removes 2,500kg of C02 out of the atmosphere annually");
+		Booster coffee = new Booster("Coffee", 3, 0, (float) 0.2, 1, "");
 		
 		//choice
 		Choice diet = new Choice(meatEating, vegetarian);
