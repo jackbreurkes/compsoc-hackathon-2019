@@ -33,8 +33,6 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.UIManager;
 
 public class MainScreen extends TimerTask {
 	
@@ -53,8 +51,15 @@ public class MainScreen extends TimerTask {
 	private JPanel screenPanel;
 	private JPanel gameInfoPanel;
 	
+	//gameInfo
+	private JTextField totalMoneyTextField;
+	private JTextField totalCarbonTextField;
+	private JTextField totalApTextField;
+	private JTextField dailyCarbonTextField;
+	private JTextField dailyExpensesTextField;
+	private JTextField dailyApTextField;
+	
 	JTextPane infoTextPane;
-	JTextPane txtpnCurrentUpgrades;
 	int itemYCoord = 10;
 	
 	private JFrame frame;
@@ -87,12 +92,6 @@ public class MainScreen extends TimerTask {
 		lblTotalmoney.setText("Total money: " + Integer.toString(manager.getMoney()));
 		lblTotalCo.setText("Total CO2: " + df.format(manager.getCarbonFootPrint()));
 		lblTotalAp.setText("Total AP: " + Integer.toString(manager.getActionPoints()));
-		
-		String upgradesListString = "";
-		for (Map.Entry<String, Integer> entry : manager.getUpgradeCounts().entrySet()) {
-			upgradesListString += String.format("%-40s %d", entry.getKey(), entry.getValue());
-		}
-		txtpnCurrentUpgrades.setText(upgradesListString);
 	}
 
 	private void initialize() {
@@ -118,7 +117,7 @@ public class MainScreen extends TimerTask {
 		frame.getContentPane().setLayout(gridBagLayout);
 		
 		leftPanel = new JPanel();
-		leftPanel.setBackground(UIManager.getColor("Button.background"));
+		leftPanel.setBackground(Color.BLACK);
 		leftPanel.setLayout(null);
 		GridBagConstraints gbc_leftPanel_1 = new GridBagConstraints();
 		gbc_leftPanel_1.fill = GridBagConstraints.BOTH;
@@ -151,19 +150,20 @@ public class MainScreen extends TimerTask {
 	public void createUpgradePanel() {
 		actionsPanel = new JPanel();
 		actionsPanel.setLayout(null);
-		tabbedPane.addTab("Upgrades", null, actionsPanel, null);
+		tabbedPane.addTab("Actions", null, actionsPanel, null);
+
 		
 		int height = 10;
 		for (int i = 0; i < manager.getUpgrades().size(); i++) {
-			addUpgradeButton(actionsPanel, height, manager.getUpgrades().get(i));
+			addButton(actionsPanel, height, manager.getUpgrades().get(i));
 			height += 60;
 		}
 		
 	}
 	
 	
-	public void addUpgradeButton(JPanel panel, int y, Upgrade upgrade) {
-		JButton button = new JButton(upgrade.getName() + " ($" + upgrade.getCost() + ")");
+	public void addButton(JPanel panel, int y, Upgrade upgrade) {
+		JButton button = new JButton(upgrade.getName());
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -221,28 +221,27 @@ public class MainScreen extends TimerTask {
 	
 	public void createGameInfoPanel() {
 		gameInfoPanel = new JPanel();
-		gameInfoPanel.setBounds(25, 0, 500, 60);
+		gameInfoPanel.setBounds(25, 0, 500, 41);
 		gameInfoPanel.setBackground(Color.GREEN);
 		rightPanel.add(gameInfoPanel);
-		gameInfoPanel.setLayout(new MigLayout("", "[88px,grow,left][74px,grow,center][61px,grow,right]", "[15px][26.00]"));
 		
 		lblDailyMoney = new JLabel("Daily Money:");
-		gameInfoPanel.add(lblDailyMoney, "cell 0 0,alignx left,aligny top");
+		gameInfoPanel.add(lblDailyMoney);
 		
 		lblDailyCo = new JLabel("Daily CO2: ");
-		gameInfoPanel.add(lblDailyCo, "cell 1 0,alignx left,aligny top");
+		gameInfoPanel.add(lblDailyCo);
 		
 		lblDailyAp = new JLabel("Daily AP:");
-		gameInfoPanel.add(lblDailyAp, "cell 2 0,alignx left,aligny top");
+		gameInfoPanel.add(lblDailyAp);
 		
 		lblTotalmoney = new JLabel("Total Money:");
-		gameInfoPanel.add(lblTotalmoney, "cell 0 1,alignx left,aligny center");
+		gameInfoPanel.add(lblTotalmoney);
 		
 		lblTotalCo = new JLabel("Total CO2: ");
-		gameInfoPanel.add(lblTotalCo, "cell 1 1,alignx left,aligny center");
+		gameInfoPanel.add(lblTotalCo);
 		
 		lblTotalAp = new JLabel("Total AP: ");
-		gameInfoPanel.add(lblTotalAp, "cell 2 1,alignx left,aligny center");
+		gameInfoPanel.add(lblTotalAp);
 	}
 	
 	public void updateGameInfoTextFields() {
@@ -251,7 +250,7 @@ public class MainScreen extends TimerTask {
 	
 	public void createInfoPanel() {
 		infoPanel = new JPanel();
-		infoPanel.setBounds(25, 72, 500, 128);
+		infoPanel.setBounds(25, 50, 500, 150);
 		infoPanel.setBackground(Color.CYAN);
 		rightPanel.add(infoPanel);
 		infoPanel.setLayout(null);
@@ -268,17 +267,6 @@ public class MainScreen extends TimerTask {
 		screenPanel.setBounds(25, 220, 500, 330);
 		rightPanel.add(screenPanel);
 		screenPanel.setLayout(null);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 12, 476, 306);
-		screenPanel.add(scrollPane);
-		
-		txtpnCurrentUpgrades = new JTextPane();
-		scrollPane.setViewportView(txtpnCurrentUpgrades);
-		txtpnCurrentUpgrades.setText("Current Upgrades");
-		
-		JLabel lblUpgrades = new JLabel("Upgrades");
-		scrollPane.setColumnHeaderView(lblUpgrades);
 		
 		for (int i = 0; i < 5; i++) {
 			addItemToInventory();

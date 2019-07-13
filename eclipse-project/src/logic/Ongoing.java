@@ -34,6 +34,10 @@ public class Ongoing {
 		return fact;
 	}
 	
+	public float getDailyCO2() {
+		return dailyCO2;
+	}
+	
 	public boolean ApplyEffects(Game gameManager) {
 		if (prerequisite != null && !gameManager.getOngoingActions().contains(prerequisite)) {
 			return false;

@@ -183,8 +183,7 @@ public class Game extends TimerTask {
 		Choice transport = new Choice(driveNormalCar, driveElectricCar);
 		Choice dryingMethod = new Choice(dryer, lineDryer);
 		
-
-
+		
 		
 		Collections.addAll(game.getUpgrades(), vegeGarden, solarPanel, electricCar);
 		
